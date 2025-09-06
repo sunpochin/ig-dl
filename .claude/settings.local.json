@@ -5,7 +5,12 @@
       "Bash(npm install:*)",
       "Bash(npm run dev:*)",
       "Bash(npm ls:*)",
-      "Bash(npm uninstall:*)"
+      "Bash(npm uninstall:*)",
+      "WebSearch",
+      "WebFetch(domain:snapinsta.to)",
+      "WebFetch(domain:fastdl.app)",
+      "WebFetch(domain:rapidapi.com)",
+      "WebFetch(domain:www.instagram.com)"
     ],
     "deny": [],
     "ask": []
