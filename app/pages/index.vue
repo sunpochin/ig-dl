@@ -218,6 +218,113 @@
                 <code class="bg-yellow-100 px-1 rounded">https://www.instagram.com/stories/username/story_id/</code>
               </p>
             </div>
+            
+            <!-- 實驗性功能 -->
+            <div class="mt-4 space-y-3">
+              <!-- 🎯 真實 SnapIns.ai 克隆（最新突破） -->
+              <div class="p-4 bg-gradient-to-r from-emerald-50 via-teal-50 to-cyan-50 border-3 border-emerald-400 rounded-xl shadow-xl">
+                <h4 class="font-bold text-emerald-900 mb-2">🎯 真實 SnapIns.ai 克隆（突破成功！）</h4>
+                <label class="flex items-center text-sm text-emerald-800 mb-2 font-semibold">
+                  <input 
+                    type="checkbox" 
+                    v-model="useSnapInsRealMethod"
+                    class="mr-2"
+                  >
+                  使用真實 SnapIns.ai 技術（直接調用他們的 action.php）
+                </label>
+                <p class="text-xs text-emerald-700 font-medium">
+                  ✅ 成功逆向工程 SnapIns.ai！完美模仿 PHP 後端 + 表單編碼請求
+                </p>
+              </div>
+
+              <!-- 🏆 終極挑戰方法 -->
+              <div class="p-3 bg-gradient-to-r from-purple-50 via-pink-50 to-red-50 border-2 border-purple-300 rounded-xl shadow-lg">
+                <h4 class="font-bold text-purple-900 mb-2">🏆 終極挑戰方法（擊敗 SnapInsta）</h4>
+                <label class="flex items-center text-sm text-purple-800 mb-2 font-medium">
+                  <input 
+                    type="checkbox" 
+                    v-model="useUltimateMethod"
+                    class="mr-2"
+                  >
+                  使用終極方法挑戰 SnapInsta（學習他們的秘密）
+                </label>
+                <p class="text-xs text-purple-700">
+                  🧠 十歲孩童解說版：學習 SnapInsta 真正秘密 + 完美瀏覽器偽造 + AI 深度分析
+                </p>
+              </div>
+
+              <!-- 🚀 超級智能方法 -->
+              <div class="p-3 bg-gradient-to-r from-red-50 to-orange-50 border border-red-200 rounded-lg">
+                <h4 class="font-semibold text-red-800 mb-2">🚀 超級智能方法（激將法特製）</h4>
+                <label class="flex items-center text-sm text-red-700 mb-2">
+                  <input 
+                    type="checkbox" 
+                    v-model="useUltraSmartMethod"
+                    class="mr-2"
+                  >
+                  使用超級智能下載（5 種智能方法組合）
+                </label>
+                <p class="text-xs text-red-600">
+                  ⚡ 完美模擬真實瀏覽器 + JSON 挖掘 + Meta 標籤獵人 + 超級 CDN 暴力破解
+                </p>
+              </div>
+
+              <!-- SnapIns.ai 風格（最新發現） -->
+              <div class="p-3 bg-green-50 border border-green-200 rounded-lg">
+                <h4 class="font-semibold text-green-800 mb-2">🎯 SnapIns.ai 風格（最新發現）</h4>
+                <label class="flex items-center text-sm text-green-700 mb-2">
+                  <input 
+                    type="checkbox" 
+                    v-model="useSnapInsStyle"
+                    class="mr-2"
+                  >
+                  使用 SnapIns.ai 風格下載（基於最新研究）
+                </label>
+                <p class="text-xs text-green-600">
+                  🔬 基於對 https://snapins.ai/ 的技術分析，使用公開端點和元數據提取
+                </p>
+              </div>
+
+              <!-- SnapInsta 風格 -->
+              <div class="p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                <h4 class="font-semibold text-blue-800 mb-2">🔥 SnapInsta 風格</h4>
+                <label class="flex items-center text-sm text-blue-700 mb-2">
+                  <input 
+                    type="checkbox" 
+                    v-model="useSnapInstaStyle"
+                    class="mr-2"
+                  >
+                  使用 SnapInsta 風格下載（CDN 猜測）
+                </label>
+                <p class="text-xs text-blue-600">
+                  🕵️ 嘗試模擬 SnapInsta 的 CDN 算法推測方法
+                </p>
+              </div>
+
+              <!-- 進階方法 -->
+              <div class="p-3 bg-red-50 border border-red-200 rounded-lg">
+                <h4 class="font-semibold text-red-800 mb-2">🧪 進階方法</h4>
+                <label class="flex items-center text-sm text-red-700 mb-2">
+                  <input 
+                    type="checkbox" 
+                    v-model="useAdvancedStory"
+                    class="mr-2"
+                  >
+                  使用進階 Story 下載（需要 Cookie）
+                </label>
+                <div v-if="useAdvancedStory" class="mt-2">
+                  <textarea
+                    v-model="instagramCookie"
+                    placeholder="可選：貼上 Instagram Cookie（格式：sessionid=...; csrftoken=...）"
+                    class="w-full p-2 text-xs border rounded resize-none"
+                    rows="3"
+                  ></textarea>
+                  <p class="text-xs text-red-600 mt-1">
+                    ⚠️ 警告：使用 Cookie 可能違反 Instagram 服務條款，僅供教育研究
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
           
           <!-- 批量 Stories 說明 -->
@@ -264,6 +371,14 @@ const selectedStories = ref([])
 const downloading = ref(false)
 // 視頻信息
 const videoInfo = ref({ duration: 0, size: '' })
+// 實驗性功能選項
+const useAdvancedStory = ref(false)
+const useSnapInstaStyle = ref(false)
+const useSnapInsStyle = ref(false)
+const useUltraSmartMethod = ref(false)
+const useUltimateMethod = ref(false)
+const useSnapInsRealMethod = ref(false)
+const instagramCookie = ref('')
 
 // 模式切換函數：切換不同的下載模式
 const switchMode = (newMode) => {
@@ -275,6 +390,13 @@ const switchMode = (newMode) => {
   inputUrl.value = ''
   downloading.value = false
   videoInfo.value = { duration: 0, size: '' }
+  useAdvancedStory.value = false
+  useSnapInstaStyle.value = false
+  useSnapInsStyle.value = false
+  useUltraSmartMethod.value = false
+  useUltimateMethod.value = false
+  useSnapInsRealMethod.value = false
+  instagramCookie.value = ''
 }
 
 // 根據模式獲取輸入框 placeholder 文字
@@ -440,12 +562,44 @@ const downloadStory = async () => {
   videoUrl.value = ''
 
   try {
+    // 根據選擇的方法決定 API 端點
+    let apiEndpoint = '/api/download-story'
+    
+    if (useSnapInsRealMethod.value) {
+      apiEndpoint = '/api/download-story-snapins-real'
+    } else if (useUltimateMethod.value) {
+      apiEndpoint = '/api/download-story-ultimate'
+    } else if (useUltraSmartMethod.value) {
+      apiEndpoint = '/api/download-story-ultra-smart'
+    } else if (useSnapInsStyle.value) {
+      apiEndpoint = '/api/download-story-snapins-style'
+    } else if (useSnapInstaStyle.value) {
+      apiEndpoint = '/api/download-story-snapinsta-style'
+    } else if (useAdvancedStory.value) {
+      apiEndpoint = '/api/download-story-advanced'
+    }
+    
+    const requestBody = {
+      url: inputUrl.value
+    }
+    
+    // 如果使用進階功能且有提供 Cookie，則加入請求
+    if (useAdvancedStory.value && instagramCookie.value.trim()) {
+      requestBody.cookie = instagramCookie.value.trim()
+    }
+    
+    console.log(`[DEBUG] 使用 API 端點: ${apiEndpoint}`)
+    console.log(`[DEBUG] 🎯 真實 SnapIns.ai 克隆: ${useSnapInsRealMethod.value}`)
+    console.log(`[DEBUG] 🏆 終極挑戰方法: ${useUltimateMethod.value}`)
+    console.log(`[DEBUG] 🚀 超級智能方法: ${useUltraSmartMethod.value}`)
+    console.log(`[DEBUG] SnapIns.ai 風格: ${useSnapInsStyle.value}`)
+    console.log(`[DEBUG] SnapInsta 風格: ${useSnapInstaStyle.value}`)
+    console.log(`[DEBUG] 進階方法: ${useAdvancedStory.value}`)
+    
     // 發送 API 請求：呼叫後端 Stories 下載服務
-    const response = await $fetch('/api/download-story', {
+    const response = await $fetch(apiEndpoint, {
       method: 'POST',
-      body: {
-        url: inputUrl.value
-      }
+      body: requestBody
     })
 
     // 處理響應：根據結果更新 UI

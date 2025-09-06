@@ -10,7 +10,9 @@
       "WebFetch(domain:snapinsta.to)",
       "WebFetch(domain:fastdl.app)",
       "WebFetch(domain:rapidapi.com)",
-      "WebFetch(domain:www.instagram.com)"
+      "WebFetch(domain:www.instagram.com)",
+      "WebFetch(domain:snapins.ai)",
+      "Bash(curl:*)"
     ],
     "deny": [],
     "ask": []

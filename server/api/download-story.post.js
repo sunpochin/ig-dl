@@ -70,6 +70,27 @@ export default defineEventHandler(async (event) => {
   }
 })
 
+// 生成隨機設備 ID（模擬 Instagram App）
+function generateDeviceId() {
+  // Instagram 設備 ID 格式
+  const uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    const r = Math.random() * 16 | 0
+    const v = c === 'x' ? r : (r & 0x3 | 0x8)
+    return v.toString(16)
+  })
+  return uuid
+}
+
+// 生成 Android ID
+function generateAndroidId() {
+  // Android ID 是 16 位的十六進制字符串
+  let androidId = ''
+  for (let i = 0; i < 16; i++) {
+    androidId += Math.floor(Math.random() * 16).toString(16)
+  }
+  return androidId
+}
+
 // 主要 Story 解析函數
 async function tryInstagramStory(url) {
   try {
@@ -154,6 +175,13 @@ async function tryInstagramStory(url) {
     const apiResult = await tryStoryInternalAPI(username, storyId, headers)
     if (apiResult) {
       return apiResult
+    }
+
+    // 方法 4: 嘗試媒體 CDN 直接訪問
+    console.log('[DEBUG] 嘗試直接構建媒體 URL...')
+    const directMediaResult = await tryDirectMediaAccess(storyId)
+    if (directMediaResult) {
+      return directMediaResult
     }
 
     console.log('[DEBUG] 所有 Story 解析方法都失敗了')
@@ -392,6 +420,59 @@ function extractMediaFromAPIResponse(data) {
     return null
   } catch (error) {
     console.log(`[DEBUG] API 響應解析失敗: ${error.message}`)
+    return null
+  }
+}
+
+// 嘗試直接構建媒體 URL（根據 Story ID 推測 CDN URL）
+async function tryDirectMediaAccess(storyId) {
+  try {
+    console.log('[DEBUG] 嘗試直接構建媒體 URL...')
+    
+    // Instagram CDN URL 模式
+    // 根據 Story ID 嘗試不同的 CDN 路徑
+    const cdnPatterns = [
+      `https://scontent.cdninstagram.com/v/t51.2885-15/${storyId}.mp4`,
+      `https://scontent.cdninstagram.com/v/t51.2885-15/${storyId}.jpg`,
+      `https://scontent.cdninstagram.com/v/t50.2886-16/${storyId}.mp4`,
+      `https://scontent.cdninstagram.com/v/t51.12442-15/${storyId}.mp4`,
+      `https://instagram.fkhh1-2.fna.fbcdn.net/v/t51.2885-15/${storyId}.jpg`,
+      `https://instagram.fkhh1-2.fna.fbcdn.net/v/t50.2886-16/${storyId}.mp4`
+    ]
+    
+    // 嘗試每個 CDN 模式
+    for (const cdnUrl of cdnPatterns) {
+      console.log(`[DEBUG] 嘗試 CDN URL: ${cdnUrl}`)
+      
+      try {
+        const response = await fetch(cdnUrl, {
+          method: 'HEAD',
+          headers: {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+          }
+        })
+        
+        console.log(`[DEBUG] CDN 響應狀態: ${response.status}`)
+        
+        if (response.ok) {
+          const contentType = response.headers.get('content-type')
+          console.log(`[DEBUG] 找到有效的媒體 URL，內容類型: ${contentType}`)
+          
+          const mediaType = contentType?.includes('video') ? 'video' : 'image'
+          return {
+            mediaUrl: cdnUrl,
+            mediaType: mediaType,
+            thumbnail: mediaType === 'video' ? cdnUrl.replace('.mp4', '.jpg') : cdnUrl
+          }
+        }
+      } catch (error) {
+        console.log(`[DEBUG] CDN URL 測試失敗: ${error.message}`)
+      }
+    }
+    
+    return null
+  } catch (error) {
+    console.log(`[DEBUG] 直接媒體訪問失敗: ${error.message}`)
     return null
   }
 }
