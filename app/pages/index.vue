@@ -10,28 +10,43 @@
           <h1 class="text-5xl font-bold text-gray-800 mb-4 text-center">Instagram 下載器</h1>
           <p class="text-lg text-gray-600 text-center mb-6">下載 Instagram Reels 和 Stories</p>
           
-          <!-- 模式切換按鈕 -->
-          <div class="flex flex-wrap justify-center gap-3 mb-6">
+        </div>
+
+        <!-- 模式切換按鈕 -->
+        <div class="w-full mb-8 flex justify-center">
+          <div class="flex bg-gray-100 rounded-xl p-1">
             <button
-              class="px-6 py-2 rounded-lg font-medium transition-all"
-              :class="mode === 'reel' ? 'bg-purple-600 text-white shadow-md' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'"
-              @click="switchMode('reel')"
+              @click="mode = 'reel'"
+              :class="[
+                'px-6 py-3 rounded-lg font-medium transition-all',
+                mode === 'reel' 
+                  ? 'bg-white text-purple-600 shadow-md' 
+                  : 'text-gray-600 hover:text-gray-800'
+              ]"
             >
-              單一 Reel 下載
+              📹 Reel 下載
             </button>
             <button
-              class="px-6 py-2 rounded-lg font-medium transition-all"
-              :class="mode === 'story' ? 'bg-purple-600 text-white shadow-md' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'"
-              @click="switchMode('story')"
+              @click="mode = 'story'"
+              :class="[
+                'px-6 py-3 rounded-lg font-medium transition-all',
+                mode === 'story' 
+                  ? 'bg-white text-purple-600 shadow-md' 
+                  : 'text-gray-600 hover:text-gray-800'
+              ]"
             >
-              單一 Story 下載
+              📱 Story 下載
             </button>
             <button
-              class="px-6 py-2 rounded-lg font-medium transition-all"
-              :class="mode === 'batch-stories' ? 'bg-purple-600 text-white shadow-md' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'"
-              @click="switchMode('batch-stories')"
+              @click="mode = 'batch-stories'"
+              :class="[
+                'px-6 py-3 rounded-lg font-medium transition-all',
+                mode === 'batch-stories' 
+                  ? 'bg-white text-purple-600 shadow-md' 
+                  : 'text-gray-600 hover:text-gray-800'
+              ]"
             >
-              批量 Stories 下載
+              📚 批量 Stories
             </button>
           </div>
         </div>
