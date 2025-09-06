@@ -294,9 +294,35 @@ function extractFromSnapInsResponse(data) {
   try {
     // 根據 SnapIns.ai 的響應格式提取
     if (data.data && Array.isArray(data.data)) {
-      for (const item of data.data) {
-        if (item.url && (item.url.includes('.mp4') || item.url.includes('.jpg'))) {
-          return item.url
+      // 取第一個項目的媒體URL
+      const firstItem = data.data[0]
+      if (firstItem) {
+        console.log(`[SNAPINS-REAL] 找到第一個項目:`, firstItem.title || 'untitled')
+        
+        // 優先順序：videoUrl > downloadUrl > 其他
+        if (firstItem.videoUrl && (firstItem.videoUrl.includes('.mp4') || firstItem.videoUrl.includes('.jpg'))) {
+          console.log(`[SNAPINS-REAL] 使用 videoUrl: ${firstItem.videoUrl.substring(0, 100)}...`)
+          return firstItem.videoUrl
+        }
+        
+        if (firstItem.downloadUrl && (firstItem.downloadUrl.includes('.mp4') || firstItem.downloadUrl.includes('.jpg'))) {
+          console.log(`[SNAPINS-REAL] 使用 downloadUrl: ${firstItem.downloadUrl.substring(0, 100)}...`)
+          return firstItem.downloadUrl
+        }
+        
+        // 檢查 extra 中的 URL
+        if (firstItem.extra && firstItem.extra.sdDownloadUrl) {
+          console.log(`[SNAPINS-REAL] 使用 sdDownloadUrl: ${firstItem.extra.sdDownloadUrl.substring(0, 100)}...`)
+          return firstItem.extra.sdDownloadUrl
+        }
+        
+        // 通用檢查
+        for (const key in firstItem) {
+          const value = firstItem[key]
+          if (typeof value === 'string' && (value.includes('.mp4') || value.includes('.jpg')) && value.startsWith('http')) {
+            console.log(`[SNAPINS-REAL] 使用 ${key}: ${value.substring(0, 100)}...`)
+            return value
+          }
         }
       }
     }

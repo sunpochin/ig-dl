@@ -41,7 +41,7 @@ export default defineEventHandler(async (event) => {
       () => ultimateMethod2_ProxyRotationWithRealSessions(url, username, storyId),
       () => ultimateMethod3_TimingBasedAttack(url, username, storyId),
       () => ultimateMethod4_DeepWebScrapingWithAI(url, username, storyId),
-      () => ultimateMethod5_UltimateHailMary(url, username, storyId)
+      () => ultimateMethod5_UltimateFinal(url, username, storyId)
     ]
 
     for (let i = 0; i < ultimateMethods.length; i++) {
@@ -335,7 +335,7 @@ async function ultimateMethod4_DeepWebScrapingWithAI(url, username, storyId) {
 }
 
 // 方法 5: 終極 Hail Mary（最後一搏）
-async function ultimateMethod5_UltimateHailMary(url, username, storyId) {
+async function ultimateMethod5_UltimateFinal(url, username, storyId) {
   console.log('[ULTIMATE] 🙏 終極 Hail Mary 攻擊...')
   
   // 所有可能的終極方法組合
