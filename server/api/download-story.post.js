@@ -98,22 +98,28 @@ async function tryInstagramStory(url) {
     console.log(`[DEBUG] 解析到用戶名: ${username}, Story ID: ${storyId}`)
 
     // 模擬真實瀏覽器的請求頭，專門為 Stories 優化
+    // 嘗試模擬 Instagram APP 的請求
     const headers = {
-      'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.1.1 Mobile/15E148 Safari/604.1',
-      'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+      // Instagram Android App User Agent
+      'User-Agent': 'Instagram 269.0.0.18.75 Android (30/11; 420dpi; 1080x2220; samsung; SM-G973F; beyond1; exynos9820; en_US; 458229257)',
+      'Accept': '*/*',
       'Accept-Language': 'en-US,en;q=0.9',
       'Accept-Encoding': 'gzip, deflate, br',
       'Cache-Control': 'no-cache',
       'Pragma': 'no-cache',
-      'Sec-Fetch-Dest': 'document',
-      'Sec-Fetch-Mode': 'navigate',
-      'Sec-Fetch-Site': 'none',
-      'Sec-Fetch-User': '?1',
-      'Upgrade-Insecure-Requests': '1',
-      // Instagram Stories 特定標頭
+      // Instagram App 特定標頭
+      'X-IG-App-ID': '936619743392459',
+      'X-IG-Device-ID': generateDeviceId(),
+      'X-IG-Android-ID': generateAndroidId(),
       'X-Requested-With': 'XMLHttpRequest',
       'X-Instagram-AJAX': '1',
-      'X-CSRFToken': 'missing'
+      'X-CSRFToken': 'missing',
+      // 嘗試添加一些可能有用的標頭
+      'X-ASBD-ID': '198387',
+      'X-IG-WWW-Claim': '0',
+      'Sec-Fetch-Dest': 'empty',
+      'Sec-Fetch-Mode': 'cors',
+      'Sec-Fetch-Site': 'same-origin'
     }
 
     // 方法 1: 直接訪問 Story URL
